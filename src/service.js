@@ -100,6 +100,7 @@ class AppService {
             let _tranDate = trimmed(subEachData['TranDate']);
             let _amount = parseNumber(subEachData['Amount']);
 
+            // eslint-disable-next-line eqeqeq
             if (accountNo == _accountNo && tranDate && _tranDate && _amount == (-1 * amount)) {
               subEachData['Comments'] = "Offset";
               eachData['Comments'] = "Offset";
