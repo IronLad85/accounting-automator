@@ -100,6 +100,7 @@ class AppService {
 
             // eslint-disable-next-line eqeqeq
             let canBeOffset = accountNo == _accountNo && tranDate && _tranDate;
+            // eslint-disable-next-line eqeqeq
             let hasAmount = _amount != 0 && _amount == (-1 * amount);
 
             if (canBeOffset && hasAmount) {
