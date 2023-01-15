@@ -29,7 +29,7 @@ class AppService {
       _.each(tendersJsonData, (eachData) => {
         let _acct = trimmed(eachData['Document #']);
         let _amount = parseNumber(eachData['Tender Amount']);
-        if (accountNo == _acct && amount == -1 * _amount) {
+        if (accountNo === _acct && amount === -1 * _amount) {
           isMatched = true;
         }
       });
@@ -38,7 +38,7 @@ class AppService {
         _.each(egcmcJsonData, (eachData) => {
           let _acct = trimmed(eachData['Acct']);
           let _amount = parseNumber(eachData['Amount']);
-          if (accountNo == _acct && amount == _amount) {
+          if (accountNo === _acct && amount === _amount) {
             isMatched = true;
           }
         });

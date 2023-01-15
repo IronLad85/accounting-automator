@@ -1,19 +1,14 @@
-import React, { useState, useEffect } from 'react';
-import { App, message, Button, Upload } from 'antd';
+import React, { useState } from 'react';
+import { App, Button, Upload } from 'antd';
 import { PlusOutlined, FileExcelOutlined, DownloadOutlined } from '@ant-design/icons';
 import AppService from './service.js';
 import * as XLSX from "xlsx";
-import * as _ from 'underscore';
 
 const MyPage = () => {
-  const { message, notification, modal } = App.useApp();
   const [processing, setIsProcessing] = useState(false);
   const [finished, setFinished] = useState(false);
   const [workbook, setWorkbook] = useState();
   const [file, setFile] = useState();
-
-
-
 
   const handleChange = async (info) => {
     setFile(info.file);
@@ -63,7 +58,6 @@ const MyPage = () => {
             </div> : null
         }
 
-
         <ProcessButton
           file={file}
           finished={finished}
@@ -85,33 +79,31 @@ const MyApp = () => (
 export default MyApp;
 
 const ProcessButton = ({ file, finished, processing, processDocument }) => {
-
-  if (file && !finished) {
-    return <div style={{ paddingBottom: 10, paddingTop: 15 }}>
-      <Button type="primary"
-        loading={processing}
-        onClick={processDocument}>
-        Process
-      </Button>
-    </div>;
+  if (finished) {
+    return <div />
   }
 
-  return <div />;
-
+  return <div style={{ paddingBottom: 10, paddingTop: 15 }}>
+    <Button type="primary"
+      disabled={!file}
+      loading={processing}
+      onClick={processDocument}>
+      Process
+    </Button>
+  </div>;
 }
 
 
+
+
+
+
 const ExcelUploadButton = ({ handleChange, file }) => {
-  const [loading, setLoading] = useState(false);
 
   const uploadButtonUI = (
     <div>
-      {loading ? <div /> : <PlusOutlined />}
-      <div
-        style={{
-          marginTop: 8,
-        }}
-      >
+      <PlusOutlined />
+      <div style={{ marginTop: 8, }}>
         Upload
       </div>
     </div>
