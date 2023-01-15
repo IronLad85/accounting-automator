@@ -71,13 +71,11 @@ class AppService {
             eachData['Comments'] = 'Balance Transfer';
           }
           // eslint-disable-next-line eqeqeq
-          else if (parseNumber(eachData['Amount']) == 0) {
+          else if (parseNumber(eachData['Store']) == 799) {
+            eachData['Comments'] = 'Bulk Activation';
             // eslint-disable-next-line eqeqeq
-            if (parseNumber(eachData['Store']) == 799) {
-              eachData['Comments'] = 'Bulk Activation';
-            } else {
-              eachData['Comments'] = 'Zero Out';
-            }
+          } else if (parseNumber(eachData['Amount']) == 0) {
+            eachData['Comments'] = 'Zero Out';
           }
         }
       })
