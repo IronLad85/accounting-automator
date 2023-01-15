@@ -29,7 +29,8 @@ class AppService {
       _.each(tendersJsonData, (eachData) => {
         let _acct = trimmed(eachData['Document #']);
         let _amount = parseNumber(eachData['Tender Amount']);
-        if (accountNo === _acct && amount === -1 * _amount) {
+        // eslint-disable-next-line eqeqeq
+        if (accountNo == _acct && amount == -1 * _amount) {
           isMatched = true;
         }
       });
@@ -38,7 +39,8 @@ class AppService {
         _.each(egcmcJsonData, (eachData) => {
           let _acct = trimmed(eachData['Acct']);
           let _amount = parseNumber(eachData['Amount']);
-          if (accountNo === _acct && amount === _amount) {
+          // eslint-disable-next-line eqeqeq
+          if (accountNo == _acct && amount == _amount) {
             isMatched = true;
           }
         });
@@ -60,8 +62,23 @@ class AppService {
         if (isMatched) {
           foundCount += 1;
           eachData['Matched'] = trimmed(eachData['Acct']) + trimmed(eachData['Amount']);
+          eachData['Comments'] = 'Matched with SA';
+
         } else {
           eachData['Matched'] = '#N/A';
+          // eslint-disable-next-line eqeqeq
+          if (eachData['TranType'] == "BALANCETRANSFER") {
+            eachData['Comments'] = 'Balance Transfer';
+          }
+          // eslint-disable-next-line eqeqeq
+          else if (parseNumber(eachData['Amount']) == 0) {
+          // eslint-disable-next-line eqeqeq
+            if (parseNumber(eachData['Store']) == 799) {
+              eachData['Comments'] = 'Bulk Activation';
+            } else {
+              eachData['Comments'] = 'Zero Out';
+            }
+          }
         }
       })
 
