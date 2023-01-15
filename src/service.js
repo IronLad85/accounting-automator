@@ -72,7 +72,7 @@ class AppService {
           }
           // eslint-disable-next-line eqeqeq
           else if (parseNumber(eachData['Amount']) == 0) {
-          // eslint-disable-next-line eqeqeq
+            // eslint-disable-next-line eqeqeq
             if (parseNumber(eachData['Store']) == 799) {
               eachData['Comments'] = 'Bulk Activation';
             } else {
@@ -86,8 +86,31 @@ class AppService {
       AppService.outputJsonData = clicksJsonData;
     }
 
+    function initVoidOffsetWorkflow() {
+      _.each(clicksJsonData, (eachData, index) => {
+        let tranType = trimmed(eachData['TranType']);
+
+        if (tranType.includes('VOID')) {
+          let accountNo = eachData['Acct'];
+          let tranDate = trimmed(eachData['TranDate']);
+          let amount = parseNumber(eachData['Amount']);
+
+          _.each(clicksJsonData, (subEachData, index) => {
+            let _accountNo = subEachData['Acct'];
+            let _tranDate = trimmed(subEachData['TranDate']);
+            let _amount = parseNumber(subEachData['Amount']);
+
+            if (accountNo == _accountNo && tranDate && _tranDate && _amount == (-1 * amount)) {
+              subEachData['Comments'] = "Offset";
+              eachData['Comments'] = "Offset";
+            }
+          });
+        }
+      });
+    }
 
     initMatchingWorkflow();
+    initVoidOffsetWorkflow();
   }
 
   static startProcessing(sourceWorkbook) {
