@@ -11,11 +11,23 @@
     "web-vitals": "^2.1.4",
     "xlsx": "^0.18.5"
   },
+  "main": "public/electron.js",
+  "build": {
+    "appId": "com.automator.app",
+    "files": [
+      "dist/**/*",
+      "package.json"
+    ]
+  },
   "scripts": {
     "start": "react-scripts start",
-    "build": "react-scripts build",
+    "build": "PUBLIC_URL=/ react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "build-electron": "react-scripts build",
+    "electron:start": "concurrently \"yarn start\" \"wait-on http://localhost:3001 && electron .\"",
+    "electron:build": "yarn build-electron && electron-builder build --publish never",
+    "electron:build:win": "yarn build-electron && electron-builder build --publish never --win"
   },
   "eslintConfig": {
     "extends": [
@@ -34,5 +46,11 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "concurrently": "^7.6.0",
+    "electron": "^22.0.2",
+    "electron-builder": "^23.6.0",
+    "wait-on": "^7.0.1"
   }
 }
